@@ -1,4 +1,4 @@
-import { Text, TextInput, View, TouchableOpacity, Image, Pressable } from "react-native";
+import { Text, TextInput, View, TouchableOpacity, Image, Pressable, ScrollView } from "react-native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import { FontAwesome, Ionicons } from "@expo/vector-icons";
 import { router, Link } from "expo-router";
@@ -7,9 +7,11 @@ import { StyleSheet } from "react-native";
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
     backgroundColor: '#fff',
-    position: 'relative'
+  },
+  scrollContent: {
+    flexGrow: 1,
+    padding: 20,
   },
   navGroup: {
     flexDirection: 'row',
@@ -47,7 +49,7 @@ const styles = StyleSheet.create({
     borderColor: '#7e7b7b'
   },
   formGroup: {
-    marginTop: 44
+    marginTop: 30
   },
   forgotPasswordText: {
     fontSize: 17,
@@ -81,13 +83,13 @@ const styles = StyleSheet.create({
   },
   socialMediaButtonGroup: {
     gap: 15,
-    marginTop: 25
+    marginTop: 20
   },
   dividerGroup: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 10,
-    marginTop: 29
+    marginTop: 20
   },
   divider: {
     borderWidth: 0.5,
@@ -100,10 +102,11 @@ const styles = StyleSheet.create({
   },
   subTextGroup: {
     flexDirection: 'row',
-    position: 'absolute',
-    bottom: 33,
-    left: 77,
-    right: 76
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 30,
+    marginBottom: 20,
+    gap: 5,
   },
   subText: {
     fontSize: 18,
@@ -120,89 +123,86 @@ export default function Index() {
   return (
     <SafeAreaProvider>
       <SafeAreaView style={styles.container}>
-        <View style={styles.navGroup}>
+        <ScrollView 
+          contentContainerStyle={styles.scrollContent}
+          showsVerticalScrollIndicator={false}
+        >
+          <View style={styles.navGroup}>
             <Pressable onPress={() => router.replace("/")}>
-                <Ionicons name="arrow-back" size={25} />
+              <Ionicons name="arrow-back" size={25} />
             </Pressable>
-          <Image source={require('@/assets/images/logo.png')} />
-        </View>
-        <Text style={styles.largeText}>Sign in to your</Text>
-        <Text style={styles.largeText}>Account</Text>
-        <Text style={styles.smallText}>
-          Enter your email and password to sign in.
-        </Text>
-
-        <View style={styles.formGroup}>
-          <View>
-            <Text style={styles.placeholderText}>Email</Text>
-            <TextInput keyboardType="email-address" style={styles.inputField} />
+            <Image source={require('@/assets/images/logo.png')} />
           </View>
-          <View style={{ marginTop: 20 }}>
-            <Text style={styles.placeholderText}>Password</Text>
-            <View style={styles.passwordGroup}>
-              <TextInput style={{ flex: 1 }} />
-              <FontAwesome name="eye-slash" size={24} color="#7E7B7B" />
-            </View>
-          </View>
-          <Text style={styles.forgotPasswordText}>Forgot password?</Text>
-        </View>
-
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}>Sign in</Text>
-        </TouchableOpacity>
-
-        <View style={styles.dividerGroup}>
-          <View
-            style={styles.divider}
-          ></View>
-          <Text
-            style={styles.dividerText}
-          >
-            OR
+          <Text style={styles.largeText}>Sign in to your</Text>
+          <Text style={styles.largeText}>Account</Text>
+          <Text style={styles.smallText}>
+            Enter your email and password to sign in.
           </Text>
-          <View
-            style={styles.divider}
-          ></View>
-        </View>
 
-        <View style={styles.socialMediaButtonGroup}>
-          <TouchableOpacity style={styles.socialMediaButton}>
-            <View
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                gap: 5,
-              }}
-            >
-              <Image source={require("@/assets/images/google.png")} />
-              <Text style={styles.socialMediaButtonText}>
-                Continue with Google
-              </Text>
+          <View style={styles.formGroup}>
+            <View>
+              <Text style={styles.placeholderText}>Email</Text>
+              <TextInput keyboardType="email-address" style={styles.inputField} />
             </View>
+            <View style={{ marginTop: 20 }}>
+              <Text style={styles.placeholderText}>Password</Text>
+              <View style={styles.passwordGroup}>
+                <TextInput style={{ flex: 1 }} secureTextEntry />
+                <FontAwesome name="eye-slash" size={24} color="#7E7B7B" />
+              </View>
+            </View>
+            <Text style={styles.forgotPasswordText}>Forgot password?</Text>
+          </View>
+
+          <TouchableOpacity style={styles.button}>
+            <Text style={styles.buttonText}>Sign in</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.socialMediaButton}>
-            <View
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                gap: 5,
-              }}
-            >
-              <Image source={require("@/assets/images/facebook.png")} />
-              <Text style={styles.socialMediaButtonText}>
-                Continue with Facebook
-              </Text>
-            </View>
-          </TouchableOpacity>
-        </View>
+          <View style={styles.dividerGroup}>
+            <View style={styles.divider}></View>
+            <Text style={styles.dividerText}>OR</Text>
+            <View style={styles.divider}></View>
+          </View>
 
-        <View style={styles.subTextGroup}>
-          <Text style={styles.subText}>Don't have an account?</Text>
-          <Link href="./join" asChild>
-            <Text style={styles.subTextJoin}>Join now</Text>
-          </Link>
-        </View>
+          <View style={styles.socialMediaButtonGroup}>
+            <TouchableOpacity style={styles.socialMediaButton}>
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  gap: 5,
+                }}
+              >
+                <Image source={require("@/assets/images/google.png")} />
+                <Text style={styles.socialMediaButtonText}>
+                  Continue with Google
+                </Text>
+              </View>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.socialMediaButton}>
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  gap: 5,
+                }}
+              >
+                <Image source={require("@/assets/images/facebook.png")} />
+                <Text style={styles.socialMediaButtonText}>
+                  Continue with Facebook
+                </Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+
+          <View style={styles.subTextGroup}>
+            <Text style={styles.subText}>Don't have an account?</Text>
+            <Link href="./join" asChild>
+              <Text style={styles.subTextJoin}>Join now</Text>
+            </Link>
+          </View>
+        </ScrollView>
       </SafeAreaView>
     </SafeAreaProvider>
   );
